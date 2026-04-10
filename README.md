@@ -98,7 +98,8 @@ The final Docker image is optimized and kept under 300MB using multi-stage build
 ## Screenshots
 
 ### Running Container
-<img width="1052" height="121" alt="image" src="https://github.com/user-attachments/assets/f5ab00d4-825c-4741-be5e-21f3340dbfb7" />
+<img width="1166" height="68" alt="image" src="https://github.com/user-attachments/assets/4be7be62-8692-443b-a0ee-0fd36cf011e4" />
+
 
 ### Application Running
 <img width="926" height="825" alt="image" src="https://github.com/user-attachments/assets/967dea90-de12-4488-80e6-97970383200e" />
