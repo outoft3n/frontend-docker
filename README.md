@@ -1,73 +1,110 @@
-# React + TypeScript + Vite
+# Frontend Docker Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project demonstrates how to containerize a frontend application using Docker.
+The application is built with React (Vite) and served using Nginx in a production environment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React frontend (Vite)
+* Multi-stage Docker build
+* Lightweight production image
+* Served with Nginx
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+frontend-docker/
+├── src/
+├── public/
+├── Dockerfile
+├── .dockerignore
+├── package.json
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## How to Run
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Build Docker Image
+
 ```
+docker build -t frontend-app .
+```
+
+### 2. Run Container
+
+```
+docker run -d -p 3000:80 frontend-app
+```
+
+### 3. Access Application
+
+Open in browser:
+
+```
+http://10.34.112.134:3000
+```
+
+---
+
+## Docker Concepts Used
+
+### Multi-stage Build
+
+The Dockerfile uses multi-stage build to:
+
+* Build the React app in Node.js
+* Serve static files using Nginx
+
+This helps reduce final image size.
+
+---
+
+## Dockerfile Highlights
+
+* Uses `node:20-alpine` for build stage
+* Uses `nginx:alpine` for production
+* Copies only necessary files to final image
+
+---
+
+## .dockerignore
+
+The `.dockerignore` file excludes unnecessary files such as:
+
+```
+node_modules
+dist
+.git
+```
+
+This keeps the Docker image clean and small.
+
+---
+
+## Image Size
+
+The final Docker image is optimized and kept under 300MB using multi-stage build.
+
+---
+
+## Screenshots
+
+### Running Container
+<img width="1052" height="121" alt="image" src="https://github.com/user-attachments/assets/f5ab00d4-825c-4741-be5e-21f3340dbfb7" />
+
+### Application Running
+<img width="926" height="825" alt="image" src="https://github.com/user-attachments/assets/967dea90-de12-4488-80e6-97970383200e" />
+
+---
+
+## Conclusion
+
+This project successfully demonstrates how to containerize a frontend application and deploy it using Docker with best practices such as multi-stage builds and production-ready serving with Nginx.
